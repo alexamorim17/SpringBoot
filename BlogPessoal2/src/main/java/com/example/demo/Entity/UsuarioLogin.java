@@ -1,11 +1,9 @@
 package com.example.demo.Entity;
 
-import java.math.BigDecimal;
-
 public class UsuarioLogin {
 
 
-	private BigDecimal id;
+	private Long id;
 
 	private String nome;
 
@@ -13,16 +11,16 @@ public class UsuarioLogin {
 
 	private String senha;
 
-	
-
 	private String token;
 
-	public BigDecimal getId() {
+	
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(BigDecimal bigDecimal) {
-		this.id = bigDecimal;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getNome() {

@@ -1,6 +1,5 @@
 package com.example.demo.Entity;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -21,7 +20,7 @@ public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private BigDecimal id;
+	private Long id;
 
 	@NotNull(message = "Nome é obrigatório")
 	private String nome;
@@ -56,11 +55,11 @@ public class Usuario {
 		this.postagem = postagem;
 	}
 
-	public BigDecimal getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(BigDecimal id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -27,8 +27,7 @@ public class PostagemController {
 	
 	@Autowired
 	private PostagemRepository repository;
-	//Serviço de injeção de dependencia do Spring
-	// Não é possível instanciar um interface, para isso é necessário usar @Autowired 
+	
 	
 	@GetMapping
 	public ResponseEntity<List<Postagem>> GetAll(){
