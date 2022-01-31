@@ -1,6 +1,5 @@
 package br.com.minhaLojaDeGames.minhaLojaDeGames.Service;
 
-
 import java.nio.charset.Charset;
 import java.util.Optional;
 
@@ -15,19 +14,22 @@ import br.com.minhaLojaDeGames.minhaLojaDeGames.Model.Usuario;
 import br.com.minhaLojaDeGames.minhaLojaDeGames.Model.UsuarioLogin;
 import br.com.minhaLojaDeGames.minhaLojaDeGames.Repository.UsuarioRepository;
 
-
 @Service
 public class UsuarioService {
 
 	@Autowired
 	public UsuarioRepository repositorio;
-	
-	public Optional <Usuario> CadastrarUsuario(Usuario usuario){
-		if(repositorio.findByUsuario(usuario.getUsuario()).isPresent()) 
+
+	public Optional<Usuario> CadastrarUsuario(Usuario usuario) {
+		if (usuario.getIdade() <= 18) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário menor de idade !", null);}
+		if (repositorio.findByUsuario(usuario.getUsuario()).isPresent()) {
 			return Optional.empty();
+		}
 		usuario.setSenha(criptografarSenha(usuario.getSenha()));
-			
+
 		return Optional.of(repositorio.save(usuario));
+
 	}
 
 	public Optional<UsuarioLogin> autenticarUsuario(Optional<UsuarioLogin> usuarioLogin) {
@@ -45,54 +47,49 @@ public class UsuarioService {
 				return usuarioLogin;
 
 			}
-		}	
-		
-		return Optional.empty();
-		
-	}
-	
-	
+		}
 
+		return Optional.empty();
+
+	}
 
 	public Optional<Usuario> atualizarUsuario(Usuario usuario) {
 
-		
-		if(repositorio.findById(usuario.getId()).isPresent()) {
-			
+		if (repositorio.findById(usuario.getId()).isPresent()) {
+
 			Optional<Usuario> buscaUsuario = repositorio.findByUsuario(usuario.getUsuario());
-			
-			if ( (buscaUsuario.isPresent()) && ( buscaUsuario.get().getId() != usuario.getId()))
-				throw new ResponseStatusException(
-						HttpStatus.BAD_REQUEST, "Usuário já existe!", null);
-			
+
+			if ((buscaUsuario.isPresent()) && (buscaUsuario.get().getId() != usuario.getId()))
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário já existe!", null);
+
 			usuario.setSenha(criptografarSenha(usuario.getSenha()));
 
 			return Optional.ofNullable(repositorio.save(usuario));
-			
+
 		}
-		
-			return Optional.empty();
-	
-	}	
+
+		return Optional.empty();
+
+	}
 
 	public String criptografarSenha(String senha) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		return  encoder.encode(senha);
-		
+		return encoder.encode(senha);
+
 	}
-	
+
 	public boolean compararSenha(String senhadoBanco, String senhaDigitada) {
-		
+
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		
+
 		return encoder.matches(senhadoBanco, senhaDigitada);
-		
+
 	}
-	
+
 	public String gerartoken(String usuario, String senha) {
-		
+
 		String token = usuario + ":" + senha;
-		byte [] tokenBase64 = Base64.encodeBase64(token.getBytes(Charset.forName("US-ASCII")));
-				return "Basic64" + new String (tokenBase64);
+		byte[] tokenBase64 = Base64.encodeBase64(token.getBytes(Charset.forName("US-ASCII")));
+		return "Basic64" + new String(tokenBase64);
 	}
 }

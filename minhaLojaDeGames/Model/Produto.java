@@ -33,7 +33,7 @@ public class Produto{
 	private String nome;// Define o nome do jogo
 	
 	@ManyToOne() // Relação de um para muitos
-	@JsonIgnoreProperties("tb_produto") // Impede de ocorrer um looping
+	@JsonIgnoreProperties("produto") // Impede de ocorrer um looping
     public Categoria categoria;
 	
 

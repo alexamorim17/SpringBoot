@@ -19,6 +19,8 @@ public class UsuarioLogin {
 
 	
 	private String token;
+	
+	private int idade;
 
 
 	public String getNome() {
@@ -79,6 +81,16 @@ public class UsuarioLogin {
 
 	public Long getId() {
 		return id;
+	}
+
+
+	public int getIdade() {
+		return idade;
+	}
+
+
+	public void setIdade(int idade) {
+		this.idade = idade;
 	}
 	
 	

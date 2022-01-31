@@ -37,7 +37,7 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter{
 	}
 	
 	@Override
-	protected void configure(HttpSecurity http) throws Exception{
+	public void configure(HttpSecurity http) throws Exception{
 		
 		http.authorizeHttpRequests()
 			.antMatchers("/usuarios/logar").permitAll()
