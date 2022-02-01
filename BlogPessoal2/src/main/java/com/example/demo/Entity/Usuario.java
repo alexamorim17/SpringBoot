@@ -17,6 +17,18 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "tb_usuario")
 public class Usuario {
+	
+	public Usuario(Long id, String nome, String senha,String imagem, String usuario) {
+		this.id = id;
+		this.nome = nome;
+		this.usuario = usuario;
+		this.senha = senha;
+		this.imagem = imagem;
+	}
+	
+	public Usuario(){
+		
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,28 +36,21 @@ public class Usuario {
 
 	@NotNull(message = "Nome é obrigatório")
 	private String nome;
-	
+
 	@NotNull(message = "Senha é obrigatório")
 	@Size(min = 6)
 	private String senha;
-	
+
 	@NotNull(message = "Nome é obrigatório")
 	private String usuario;
 	
-	@NotNull(message = "Email é obrigatório")
-	private String email;
-	
+
+	@NotNull
+	private String imagem;
+
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
 	List<Postagem> postagem;
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
 
 	public List<Postagem> getPostagem() {
 		return postagem;
@@ -77,6 +82,14 @@ public class Usuario {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public String getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
 	}
 
 	public String getUsuario() {
